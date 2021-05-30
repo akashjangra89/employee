@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <script src="https://kit.fontawesome.com/4508ce3a9e.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1 style="text-align: center"><%= title %></h1>
+    <!-- Update Records-->
+
+    
+    <form action="/update" method="POST" class="row gy-3 gx-3 align-items-center mt-5 justify-content-center" id = "updaterecords">
+        <input type="hidden" name="id" value="<%= records._id %>">
+        <div class="col-auto">
+          <label class="visually-hidden" for="uName">Update Name</label>
+          <input name="name" type="text" class="form-control" id="uName" value="<%= records.name %>" placeholder="Update Name">
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uage">Update Age</label>
+          <input name="age" type="Number" class="form-control" id="uage" value="<%= records.age %>" placeholder="Update Age">
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uMobile">Update Mobile Number</label>
+          <input name="mNum" type="Number" class="form-control" id="uMobile" value="<%= records.mNumber %>" placeholder="Update Mobile Number">
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uAlter">Update AlterNate Number</label>
+          <input name="aNum" type="Number" class="form-control" id="uAlter" value="<%= records.aNumber %>" placeholder="Update Alternate Number">
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uEmail">Update Email</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="uEmail" value="<%= records.email %>" placeholder="Update Email" name="email">
+          </div>
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uDepart">Department</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="uDepart" value="<%= records.department %>" placeholder="Update Department" name="department">
+          </div>
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uRate">Rate</label>
+          <input name="rate" type="Number" class="form-control" id="uRate" value="<%= records.rate %>" placeholder="Update Hourly Rate">
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="uHours">Total Hours</label>
+          <input name="hours" type="Number" class="form-control" id="uHours" value="<%= records.hours %>" placeholder="Update Total Hours">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form
+    
+    
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"
+      ></script>
+    </body>
+  </html>
+  
