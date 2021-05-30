@@ -8,7 +8,7 @@ const getEmployee = empDetails.find({});
 router.get("/", function (req, res, next) {
   getEmployee.exec(function (err, data) {
     if (err) throw err;
-    res.render("index", { title: "Employee Details Portal", records: data });
+    res.render("index", { title: "Employee Details Portal", records: data, success: '' });
   });
 });
 
@@ -70,7 +70,7 @@ router.post("/", function (req, res, next) {
     if (err) throw err;
     getEmployee.exec(function (err, data) {
       if (err) throw err;
-      res.render("index", { title: "Employee Details Portal", records: data });
+      res.render("index", { title: "Employee Details Portal", records: data, success: "Data Submitted Successfully" });
     });
   });
 });
@@ -84,9 +84,14 @@ router.get("/delete/:id", function (req, res, next) {
 
   delData.exec(function (err) {
     if (err) throw err;
-    res.redirect("/");
+    getEmployee.exec(function (err, data) {
+      if (err) throw err;
+      res.render("index", { title: "Employee Details Portal", records: data, success: "Data Deleted Successfully" });
+    });
   });
 });
+
+//  Edit
 
 router.get("/edit/:id", function (req, res, next) {
   const id = req.params.id;
@@ -96,6 +101,8 @@ router.get("/edit/:id", function (req, res, next) {
     res.render("update", { title: "Update Record", records: data });
   });
 });
+
+// Update
 
 router.post("/update", function (req, res, next) {
   const getBody = req.body;
@@ -112,7 +119,10 @@ router.post("/update", function (req, res, next) {
   });
   update.exec(function (err, data) {
     if (err) throw err;
-    res.redirect("/");
+    getEmployee.exec(function (err, data) {
+      if (err) throw err;
+      res.render("index", { title: "Employee Details Portal", records: data, success: "Data Updated Successfully" });
+    });
   });
 });
 

@@ -12,6 +12,11 @@
     <script src="https://kit.fontawesome.com/4508ce3a9e.js" crossorigin="anonymous"></script>
   </head>
   <body>
+    <% if(success != '') {%>
+    <div class="alert alert-success" role="alert">
+      <strong>Success:- </strong> <%= success %>
+    </div>
+    <% } %>
     <h1 style="text-align: center"><%= title %></h1>
     <p style="text-align: center">Welcome to <%= title %></p>
 
