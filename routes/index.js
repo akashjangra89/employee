@@ -1,6 +1,13 @@
 var express = require("express");
+const { now } = require("mongoose");
 var router = express.Router();
+const multer = require("multer");
+const { dirname } = require("path");
+const path = require("path");
+const { Z_DATA_ERROR } = require("zlib");
+const app = require("../app");
 const empDetails = require("../modules/empModule");
+const file = require("../modules/file");
 
 const getEmployee = empDetails.find({});
 
@@ -8,7 +15,7 @@ const getEmployee = empDetails.find({});
 router.get("/", function (req, res, next) {
   getEmployee.exec(function (err, data) {
     if (err) throw err;
-    res.render("index", { title: "Employee Details Portal", records: data, success: '' });
+    res.render("index", { title: "Employee Details Portal", records: data, success: "" });
   });
 });
 
@@ -70,7 +77,11 @@ router.post("/", function (req, res, next) {
     if (err) throw err;
     getEmployee.exec(function (err, data) {
       if (err) throw err;
-      res.render("index", { title: "Employee Details Portal", records: data, success: "Data Submitted Successfully" });
+      res.render("index", {
+        title: "Employee Details Portal",
+        records: data,
+        success: "Data Submitted Successfully",
+      });
     });
   });
 });
@@ -86,7 +97,11 @@ router.get("/delete/:id", function (req, res, next) {
     if (err) throw err;
     getEmployee.exec(function (err, data) {
       if (err) throw err;
-      res.render("index", { title: "Employee Details Portal", records: data, success: "Data Deleted Successfully" });
+      res.render("index", {
+        title: "Employee Details Portal",
+        records: data,
+        success: "Data Deleted Successfully",
+      });
     });
   });
 });
@@ -121,8 +136,52 @@ router.post("/update", function (req, res, next) {
     if (err) throw err;
     getEmployee.exec(function (err, data) {
       if (err) throw err;
-      res.render("index", { title: "Employee Details Portal", records: data, success: "Data Updated Successfully" });
+      res.render("index", {
+        title: "Employee Details Portal",
+        records: data,
+        success: "Data Updated Successfully",
+      });
     });
+  });
+});
+
+// Upload File
+router.use(express.static(path.join(__dirname, "./public")));
+
+const Storage = multer.diskStorage({
+  destination: "./public/uploads",
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: Storage,
+}).single("file");
+
+const uploadImage = file.find({});
+
+router.post("/upload", upload, function (req, res, next) {
+  const fileName = req.file.filename;
+  let success = req.file.filename + "Uploaded Successfully";
+
+  const submitFile = new file({
+    file: fileName,
+  });
+
+  submitFile.save(function (err) {
+    if (err) throw err;
+    uploadImage.exec(function (err, data) {
+      if (err) throw err;
+      res.render("upload", { title: "Upload File Here", success: success, file: data });
+    });
+  });
+});
+
+router.get("/upload", function (req, res, next) {
+  uploadImage.exec(function (err, data) {
+    if (err) throw err;
+    res.render("upload", { title: "Upload File Here", file: data });
   });
 });
 
